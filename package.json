@@ -1,0 +1,24 @@
+{
+  "name": "stocktracker",
+  "version": "0.1.0",
+  "description": "This is a Node.js program that will keep track of the availability of items on certain sites",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhijiec99/StockTracker.git"
+  },
+  "author": "zhijiec99",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhijiec99/StockTracker/issues"
+  },
+  "homepage": "https://github.com/zhijiec99/StockTracker#readme",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cheerio": "^0.22.23",
+    "cheerio": "^1.0.0-rc.5"
+  }
+}
