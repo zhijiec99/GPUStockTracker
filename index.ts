@@ -3,7 +3,6 @@ import cheerio from 'cheerio';
 import { NewEggLookup , get3000SeriesProductIDsFromSearchQuery} from './src/Handlers/Newegg';
 import { NewEggStockService } from './src/NewEggStockService';
 
-
 async function getProductIDs(q: string){
     let s = await get3000SeriesProductIDsFromSearchQuery(q);
     console.log(s);

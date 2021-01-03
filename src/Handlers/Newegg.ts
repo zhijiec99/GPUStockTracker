@@ -32,7 +32,7 @@ function checkStock($: cheerio.Root, url: string, id: string){
     let isSoldOut = soldOutText == "Sold Out"
     Logger.logStockStatus("newegg",{name: product.substr(0, 50), id}, url, isSoldOut);
     if(!isSoldOut){
-        //Should call a notifier
+        open(`https://secure.newegg.ca/Shopping/AddtoCart.aspx?Submit=ADD&ItemList=${id}`)
     }
 }
 
