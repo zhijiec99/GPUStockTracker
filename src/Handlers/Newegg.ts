@@ -1,8 +1,9 @@
 import { Logger } from "../Logger/Logger";
 import { request } from "../Util/NetworkUtil";
 import cheerio  from 'cheerio';
+
 export async function NewEggLookup(productID: string){
-    let url = `https://www.newegg.ca/p/${productID}`;
+    let url = `https://www.newegg.ca/p/${productID}?recaptcha=pass`;
     try {
         let response = await request(url);
         if(!response.data){
@@ -10,22 +11,29 @@ export async function NewEggLookup(productID: string){
             return;
         }
 
+        // console.log(response.data);
+
         const root = cheerio.load(response.data);
-        checkStock(root, url);
+        checkStock(root, url, productID);
     } catch (err){
         Logger.err(`Fetch for ${url} went wrong`)
     }
 }
-
 /**
  * Checks if th
  */
-function checkStock($: cheerio.Root, url: string){
+function checkStock($: cheerio.Root, url: string, id: string){
     let soldOutText = $('#ProductBuy .btn').first().text();
     let product = $(".product-title").first().text();
-
+    if($("body:contains(Are you a human?)").length > 0){
+        Logger.logStockStatus("newegg", {name: product.substr(0, 50), id}, url, false, true);
+        return;
+    }
     let isSoldOut = soldOutText == "Sold Out"
-    Logger.logStockStatus("newegg", product.substr(1, 50), url, isSoldOut);
+    Logger.logStockStatus("newegg",{name: product.substr(0, 50), id}, url, isSoldOut);
+    if(!isSoldOut){
+        //Should call a notifier
+    }
 }
 
 export async function get3000SeriesProductIDsFromSearchQuery(query: string): Promise<string[]> {
