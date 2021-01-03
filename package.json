@@ -4,7 +4,7 @@
   "description": "This is a Node.js program that will keep track of the availability of items on certain sites",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node index.ts"
   },
   "repository": {
     "type": "git",
