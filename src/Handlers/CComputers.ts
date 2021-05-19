@@ -1,10 +1,11 @@
 import { Logger } from "../Logger/Logger";
 import { request } from "../Util/NetworkUtil";
 import cheerio  from 'cheerio';
-
+import open from 'open'
 export async function CCLookup(){
     //3080
     let url = `https://www.canadacomputers.com/index.php?cPath=43&sf=:3_5&mfr=&pr=`;
+    // let url = `https://www.canadacomputers.com/index.php?cPath=43&sf=:&mfr=&pr=`
     try {
         let response = await request(url);
         if(!response.data){
@@ -32,7 +33,11 @@ function checkStock($: cheerio.Root, url: string){
         let text = $(el).text();
         let name = $($(el.parent.parent.parent.parent.parent.parent).find('.text-dark.text-truncate_3')).text() || "";
         let id = getParameterByName('item_id', url) || "";
-        Logger.logCanadaComputers({name: name.substr(0, 50), id, url}, false);
+        let hasStock = !text.includes("Learn More");
+        if(hasStock){
+            open(url);
+        }
+        Logger.logCanadaComputers({name: name.substr(0, 50), id, url}, hasStock);
     }
     // let soldOutText = $('#ProductBuy .btn').first().text();
     // let product = $(".product-title").first().text();
